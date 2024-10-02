@@ -3,6 +3,7 @@ package com.github.gabguedes.boardgames
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.github.gabguedes.boardgames.databinding.BoardGameItemBinding
 
 class MainListAdapter(
@@ -26,6 +27,10 @@ class MainListAdapter(
         holder.binding.textViewGameName.text = currentBoardGame.name
         holder.binding.textViewGameDescription.text =
             currentBoardGame.description
+        Glide
+            .with(holder.itemView.context)
+            .load(currentBoardGame.imageUrl)
+            .into(holder.binding.imageViewGameImage)
         holder.binding.buttonEdit.setOnClickListener {
             onEditClick(currentBoardGame)
         }
@@ -39,4 +44,5 @@ class MainListAdapter(
         this.boardGames = boardGames
         notifyDataSetChanged()
     }
+
 }

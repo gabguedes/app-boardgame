@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.github.gabguedes.boardgames.databinding.ActivityMainBinding
@@ -36,15 +37,18 @@ class MainActivity : AppCompatActivity() {
             val gameName = binding.editTextGameName.text.toString()
             val gameDescription =
                 binding.editTextGameDescription.text.toString()
+            val gameImageUrl = binding.editTextGameImageUrl.text.toString()
             if (gameName.isNotBlank() && gameDescription.isNotBlank()) {
                 mainViewModel.insert(
                     BoardGame(
                         name = gameName,
-                        description = gameDescription
+                        description = gameDescription,
+                        imageUrl = gameImageUrl
                     )
                 )
                 binding.editTextGameName.text.clear()
                 binding.editTextGameDescription.text.clear()
+                binding.editTextGameImageUrl.text.clear()
                 binding.editTextGameName.requestFocus()
             }
         }
@@ -58,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             onDeleteClick = { game -> mainViewModel.delete(game) }
         )
         binding.recyclerViewGames.adapter = adapter
-        binding.recyclerViewGames.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewGames.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         // Adicionar Divider
         val dividerItemDecoration = DividerItemDecoration(
             binding.recyclerViewGames.context,
